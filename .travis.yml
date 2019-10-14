@@ -1,0 +1,11 @@
+dist: trusty
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t whitebook .
+      - docker images
+      - docker tag whitebook $DOCKER_USERNAME/whitebook
+      - docker push $DOCKER_USERNAME/whitebook
